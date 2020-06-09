@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,18 +31,18 @@ Route::get('/hello', function () {
 */
 //BELOW IS THE CONTROLLERS FOR posts.........................
 
-Route::get('/', 'PagesController@index');
-Route::resource('posts', 'PostsController');
-Route::post('dashboard/post', 'PostsController@store');
 Route::get('post/create', 'BackEndController@create');
-Route::get('post/dashboard/create', 'PostsController@create');
+Route::get('posts', 'BackEndController@edit');
+Route::get('post/edit', 'PostsController@edit');
+Route::resource('posts', 'PostsController');
+Route::post('post', 'PostsController@store');
+Route::get('post/create', 'PostsController@create');
 Auth::routes();
-Route::get('/dashboard', 'dashboardController@index')->name('dashboard');
-Route::get('/dashboard', 'dashboardController@index');
+Route::get('dashboard', 'DashboardController@index')->name('Dashboard');
+Route::get('/dashboard', 'DashboardController@index');
 Route::get('/create','PostsController@Storage');
-Route::get('posts/dashboard/edit','PostsController@update');
-
-
+Route::get('posts/create', 'BackEndController@create');
+Route::get('/dashboard', 'DashboardController@dashboard');
 
   //comments controller
   Route::get('comments','commentsController@comments');
@@ -52,13 +52,14 @@ Route::get('posts/dashboard/edit','PostsController@update');
 //page.....................frontEndpages.
 
 Route::get('/', 'FrontEndController@index');
+Route::get('/blog', 'FrontEndController@blog');
+Route::get('/blog_single', 'FrontEndController@blog_single');
 Route::get('/services','FrontEndController@services');
 Route::get('/about','FrontEndController@about');
 Route::get('/project','FrontEndController@project');
 Route::resource('posts', 'postsController');
-Route::get('/post','FrontEndController@post',
-                            ['uses' => 'FrontEndController@posts.create']);
 Route::get('/post_single','FrontEndController@post_single');
+Route::get('/post_single','PostsController@show');
 Auth::routes();
 // email sending on the contact page.
 Route::get('/contact',
@@ -86,14 +87,6 @@ Route::post('/quotemessage',
 
  //dashboard for footer and header combined here
 
- Route::get('/', 'BackendController@dashboard');
- Route::get('posts/edit', 'BackendController@update');
  
- 
-
-// BackEnd dashboard that performs processes...............
- 
- 
-
 
 
